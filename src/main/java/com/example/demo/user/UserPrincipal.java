@@ -1,6 +1,5 @@
 package com.example.demo.user;
 
-import com.example.demo.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +9,7 @@ import java.util.Collection;
  * Created by Bauka on 27-Sep-18
  */
 public class UserPrincipal implements UserDetails {
+
     private User user;
 
     public UserPrincipal(User user) {
@@ -48,6 +48,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getEnabled();
     }
 }

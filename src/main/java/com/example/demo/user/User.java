@@ -8,9 +8,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 public class User {
+
     private Long id;
     private String login;
     private String password;
+    private Boolean enabled;
+    private String email;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +42,23 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Column(name = "enabled")
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
