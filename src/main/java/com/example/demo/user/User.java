@@ -1,6 +1,7 @@
 package com.example.demo.user;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Bauka on 27-Sep-18
@@ -14,6 +15,7 @@ public class User {
     private String password;
     private Boolean enabled;
     private String email;
+    private Role role;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,5 +62,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

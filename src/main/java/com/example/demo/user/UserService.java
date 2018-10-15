@@ -1,11 +1,14 @@
 package com.example.demo.user;
 
+import com.example.demo.user.repository.RoleRepository;
 import com.example.demo.user.repository.UserRepository;
 import com.example.demo.utils.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Created by Bauka on 27-Sep-18
@@ -20,6 +23,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private UserConfirmationService userConfirmationService;
 
     public User register(UserDto userDto) {
@@ -31,6 +37,10 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         user.setEnabled(false);
+        Optional<Role> role = roleRepository.findById(userDto.getRoleId());
+        if (role.isPresent()){
+            user.setRole(role.get());
+        }
         User retUser = userRepository.save(user);
         userConfirmationService.verify(user);
         return retUser;
