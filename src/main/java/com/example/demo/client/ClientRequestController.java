@@ -19,8 +19,8 @@ public class ClientRequestController {
     @Autowired
     private ClientRequestService clientRequestService;
 
-    @PostMapping("/clientRequest")
-    public HttpStatus register(@RequestBody RequestDto requestDto) {
+    @PostMapping("/putRequest")
+    public HttpStatus putRequest(@RequestBody RequestDto requestDto) {
         clientRequestService.putRequest(requestDto);
         return HttpStatus.OK;
     }

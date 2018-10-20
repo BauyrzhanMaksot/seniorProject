@@ -1,18 +1,21 @@
 package com.example.demo.driver;
 
+import com.example.demo.user.User;
+
 import javax.persistence.*;
 
 /**
  * Created by Bauka on 15-Oct-18
  */
 @Entity
-@Table(name = "driver_offer")
+@Table(name = "driver_offers")
 public class DriverOffer {
 
     private Long id;
     private String pointA;
     private String pointB;
     private String price;
+    private User driver;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,5 +53,15 @@ public class DriverOffer {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    public User getDriver() {
+        return driver;
+    }
+
+    public void setDriver(User driver) {
+        this.driver = driver;
     }
 }
