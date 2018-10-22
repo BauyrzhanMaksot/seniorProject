@@ -34,4 +34,8 @@ public class ClientRequestService {
     public List<ClientRequest> getRequests(){
         return clientRequestRepository.findAll();
     }
+
+    public HttpStatus deleteRequest() {
+        return HttpStatus.OK;
+    }
 }

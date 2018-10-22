@@ -1,5 +1,6 @@
 package com.example.demo.order;
 
+import com.example.demo.client.ClientRequestService;
 import com.example.demo.driver.DriverOffer;
 import com.example.demo.driver.DriverOfferRepository;
 import com.example.demo.user.User;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Bauka on 17-Oct-18
@@ -29,6 +31,9 @@ public class OrderService {
     @Autowired
     private DriverOfferRepository driverOfferRepository;
 
+    @Autowired
+    private ClientRequestService clientRequestService;
+
     HttpStatus putOrder(Long orderId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
@@ -41,6 +46,14 @@ public class OrderService {
         order.setClient(userPrincipal.getUser());
         order.setDriver(driverOffer.getDriver());
         orderRepository.save(order);
+        clientRequestService.deleteRequest();
         return HttpStatus.OK;
+    }
+
+    List<Order> getHistoryClient() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        Long id = userPrincipal.getUser().getId();
+        return orderRepository.findByUserId(id);
     }
 }
