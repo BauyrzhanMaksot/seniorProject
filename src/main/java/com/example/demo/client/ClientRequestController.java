@@ -29,4 +29,9 @@ public class ClientRequestController {
     public List<ClientRequest> getRequest(){
         return clientRequestService.getRequests();
     }
+
+    @PostMapping("/searchRequests")
+    public List<ClientRequest> searchReqeust(@RequestBody ClientRequestDao clientRequestDao) {
+        return clientRequestService.searchRequest(clientRequestDao);
+    }
 }

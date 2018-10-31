@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class ClientRequestService {
 
     public List<ClientRequest> getRequests(){
         return clientRequestRepository.findAll();
+    }
+
+    public List<ClientRequest> searchRequest(ClientRequestDao clientRequestDao) {
+        return clientRequestRepository.searchRequest(clientRequestDao.getDeparture(), clientRequestDao.getArrival());
     }
 
     public HttpStatus deleteRequest() {
