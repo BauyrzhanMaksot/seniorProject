@@ -35,4 +35,10 @@ public class DriverOfferService {
     List<DriverOffer> getOffers() {
         return driverOfferRepository.findAll();
     }
+
+    List<DriverOffer> getMyOffers() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        return driverOfferRepository.findByDriverId(userPrincipal.getUser().getId());
+    }
 }

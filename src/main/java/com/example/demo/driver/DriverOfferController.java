@@ -25,6 +25,11 @@ public class DriverOfferController {
         return HttpStatus.OK;
     }
 
+    @GetMapping("/getOffer")
+    public List<DriverOffer> getMyOffers() {
+        return driverOfferService.getMyOffers();
+    }
+
     @GetMapping("/getOffers")
     public List<DriverOffer> getOffers(){
         return driverOfferService.getOffers();

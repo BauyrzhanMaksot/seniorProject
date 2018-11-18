@@ -1,5 +1,7 @@
 package com.example.demo.user;
 
+import com.example.demo.userImage.UserImage;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class User {
     private Boolean enabled;
     private String email;
     private Role role;
+    private UserImage userImage;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,5 +75,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @OneToOne(mappedBy = "user")
+    public UserImage getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UserImage userImage) {
+        this.userImage = userImage;
     }
 }

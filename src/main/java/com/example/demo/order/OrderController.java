@@ -23,7 +23,7 @@ public class OrderController {
         return HttpStatus.OK;
     }
 
-    @GetMapping("getHistoryClient")
+    @GetMapping("getHistory")
     List<Order> getHistoryClient() {
         return orderService.getHistoryClient();
     }

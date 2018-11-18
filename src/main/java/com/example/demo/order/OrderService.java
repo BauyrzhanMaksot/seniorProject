@@ -45,6 +45,7 @@ public class OrderService {
         order.setPointB(driverOffer.getPointB());
         order.setClient(userPrincipal.getUser());
         order.setDriver(driverOffer.getDriver());
+        order.setPrice(driverOffer.getPrice());
         orderRepository.save(order);
         clientRequestService.deleteRequest();
         return HttpStatus.OK;
@@ -54,6 +55,13 @@ public class OrderService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
         Long id = userPrincipal.getUser().getId();
-        return orderRepository.findByUserId(id);
+        return orderRepository.findByClientId(id);
+    }
+
+    List<Order> getHistoryDriver() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        Long id = userPrincipal.getUser().getId();
+        return orderRepository.findByDriverId(id);
     }
 }

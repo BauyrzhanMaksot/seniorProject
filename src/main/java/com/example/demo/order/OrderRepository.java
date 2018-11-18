@@ -13,5 +13,8 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "select * from order_history o where o.client_id = ?1", nativeQuery = true)
-    List<Order> findByUserId(Long userId);
+    List<Order> findByClientId(Long userId);
+
+    @Query(value = "select * from order_history o where o.driver_id = ?1", nativeQuery = true)
+    List<Order> findByDriverId(Long userId);
 }

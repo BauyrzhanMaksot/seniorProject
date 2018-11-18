@@ -22,6 +22,7 @@ public class Order {
     private String driverComment;
     private User driver;
     private User client;
+    private String price;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,5 +115,14 @@ public class Order {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    @Column(name = "price")
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
