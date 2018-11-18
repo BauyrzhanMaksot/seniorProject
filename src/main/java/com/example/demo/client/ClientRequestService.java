@@ -1,9 +1,11 @@
 package com.example.demo.client;
 
 import com.example.demo.RequestDto;
+import com.example.demo.user.User;
 import com.example.demo.user.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class ClientRequestService {
 
     @Autowired
     private ClientRequestRepository clientRequestRepository;
+
+    @Autowired
+    private SimpMessagingTemplate template;
 
     public HttpStatus putRequest(RequestDto requestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -42,5 +47,12 @@ public class ClientRequestService {
 
     public HttpStatus deleteRequest() {
         return HttpStatus.OK;
+    }
+
+    public void sendNotifications() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        User user = userPrincipal.getUser();
+        template.convertAndSend("/bake/driver", "new request by " + user.getLogin());
     }
 }

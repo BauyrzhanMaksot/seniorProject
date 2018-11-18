@@ -3,6 +3,7 @@ package com.example.demo.client;
 import com.example.demo.RequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ public class ClientRequestController {
     @PostMapping("/putRequest")
     public HttpStatus putRequest(@RequestBody RequestDto requestDto) {
         clientRequestService.putRequest(requestDto);
+        clientRequestService.sendNotifications();
         return HttpStatus.OK;
     }
 
