@@ -35,4 +35,10 @@ public class UserController {
     public User getUser(){
         return userService.getUser();
     }
+
+    @PostMapping("/updateUser")
+    public HttpStatus updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return HttpStatus.OK;
+    }
 }

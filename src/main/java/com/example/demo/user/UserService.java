@@ -2,8 +2,10 @@ package com.example.demo.user;
 
 import com.example.demo.user.repository.RoleRepository;
 import com.example.demo.user.repository.UserRepository;
+import com.example.demo.userImage.UserImage;
 import com.example.demo.utils.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,5 +51,13 @@ public class UserService {
     public User getUser() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByLogin(login);
+    }
+
+    public HttpStatus updateUser(User user) {
+        UserImage userImage = user.getUserImage();
+        userImage.setUser(user);
+        user.setUserImage(userImage);
+        userRepository.save(user);
+        return HttpStatus.OK;
     }
 }

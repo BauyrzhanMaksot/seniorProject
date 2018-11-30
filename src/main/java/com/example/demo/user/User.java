@@ -1,5 +1,7 @@
 package com.example.demo.user;
 
+import com.example.demo.client.Client;
+import com.example.demo.driver.Driver;
 import com.example.demo.userImage.UserImage;
 
 import javax.persistence.*;
@@ -19,6 +21,10 @@ public class User {
     private String email;
     private Role role;
     private UserImage userImage;
+    private Client client;
+    private Driver driver;
+    private String firstName;
+    private String lastName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,12 +83,50 @@ public class User {
         this.role = role;
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     public UserImage getUserImage() {
         return userImage;
     }
 
     public void setUserImage(UserImage userImage) {
         this.userImage = userImage;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "client_id")
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "driver_id")
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    @Column(name = "first_name")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

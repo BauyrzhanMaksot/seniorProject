@@ -45,7 +45,8 @@ public class ClientRequestService {
         return clientRequestRepository.searchRequest(clientRequestDao.getDeparture(), clientRequestDao.getArrival());
     }
 
-    public HttpStatus deleteRequest() {
+    public HttpStatus deleteRequest(Long id) {
+        clientRequestRepository.deleteById(id);
         return HttpStatus.OK;
     }
 
@@ -53,6 +54,6 @@ public class ClientRequestService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
         User user = userPrincipal.getUser();
-        template.convertAndSend("/bake/driver", "new request by " + user.getLogin());
+        template.convertAndSend("/bake/driver", "New Request by " + user.getLogin());
     }
 }

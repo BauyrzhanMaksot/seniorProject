@@ -41,4 +41,9 @@ public class DriverOfferService {
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
         return driverOfferRepository.findByDriverId(userPrincipal.getUser().getId());
     }
+
+    public HttpStatus deleteOffer(Long id) {
+        driverOfferRepository.deleteById(id);
+        return HttpStatus.OK;
+    }
 }

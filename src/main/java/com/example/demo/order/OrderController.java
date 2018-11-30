@@ -19,12 +19,21 @@ public class OrderController {
 
     @GetMapping("acceptOffer/{offerId}")
     HttpStatus acceptOffer(@PathVariable Long offerId){
-        orderService.putOrder(offerId);
+        orderService.putAcceptedOffer(offerId);
         return HttpStatus.OK;
     }
 
-    @GetMapping("getHistory")
+    @GetMapping("acceptRequest/{requestId}")
+    HttpStatus acceptRequest(@PathVariable Long requestId) {
+        orderService.putAcceptedRequest(requestId);
+        return HttpStatus.OK;
+    }
+
+    @GetMapping("getHistoryClient")
     List<Order> getHistoryClient() {
         return orderService.getHistoryClient();
     }
+
+    @GetMapping("getHistoryDriver")
+    List<Order> getHistoryDriver() { return orderService.getHistoryDriver(); }
 }

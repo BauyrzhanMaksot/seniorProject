@@ -1,8 +1,11 @@
 package com.example.demo.order;
 
+import com.example.demo.client.ClientRequest;
+import com.example.demo.client.ClientRequestRepository;
 import com.example.demo.client.ClientRequestService;
 import com.example.demo.driver.DriverOffer;
 import com.example.demo.driver.DriverOfferRepository;
+import com.example.demo.driver.DriverOfferService;
 import com.example.demo.user.User;
 import com.example.demo.user.UserPrincipal;
 import com.example.demo.user.repository.UserRepository;
@@ -34,7 +37,13 @@ public class OrderService {
     @Autowired
     private ClientRequestService clientRequestService;
 
-    HttpStatus putOrder(Long orderId) {
+    @Autowired
+    private ClientRequestRepository clientRequestRepository;
+
+    @Autowired
+    private DriverOfferService driverOfferService;
+
+    HttpStatus putAcceptedOffer(Long orderId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
         DriverOffer driverOffer = driverOfferRepository.findById(orderId).orElse(null);
@@ -47,7 +56,24 @@ public class OrderService {
         order.setDriver(driverOffer.getDriver());
         order.setPrice(driverOffer.getPrice());
         orderRepository.save(order);
-        clientRequestService.deleteRequest();
+        driverOfferService.deleteOffer(driverOffer.getId());
+        return HttpStatus.OK;
+    }
+
+    HttpStatus putAcceptedRequest(Long orderId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        ClientRequest clientRequest = clientRequestRepository.findById(orderId).orElse(null);
+        if (clientRequest == null) return HttpStatus.NOT_FOUND;
+        Order order = new Order();
+        order.setDate(new Date());
+        order.setPointA(clientRequest.getPointA());
+        order.setPointB(clientRequest.getPointB());
+        order.setClient(clientRequest.getClient());
+        order.setDriver(userPrincipal.getUser());
+        order.setPrice(clientRequest.getPrice());
+        orderRepository.save(order);
+        clientRequestService.deleteRequest(clientRequest.getId());
         return HttpStatus.OK;
     }
 
