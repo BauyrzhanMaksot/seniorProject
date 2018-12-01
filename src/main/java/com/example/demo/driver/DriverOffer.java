@@ -1,6 +1,7 @@
 package com.example.demo.driver;
 
 import com.example.demo.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -67,7 +68,7 @@ public class DriverOffer {
         this.driver = driver;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy="driverOffer")
     public List<DriverLongTRDays> getDays() {
         return days;
     }

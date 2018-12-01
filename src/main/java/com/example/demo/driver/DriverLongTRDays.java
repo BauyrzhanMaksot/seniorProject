@@ -1,5 +1,7 @@
 package com.example.demo.driver;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -24,6 +26,7 @@ public class DriverLongTRDays {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "driver_offers_id")
     public DriverOffer getDriverOffer() {
         return driverOffer;
