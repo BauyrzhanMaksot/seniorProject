@@ -4,6 +4,7 @@ import com.example.demo.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +20,9 @@ public class DriverOffer {
     private String price;
     private User driver;
     private List<DriverLongTRDays> days;
+    private Boolean longTerm;
+    private Integer seats;
+    private Date time;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,5 +79,32 @@ public class DriverOffer {
 
     public void setDays(List<DriverLongTRDays> days) {
         this.days = days;
+    }
+
+    @Column(name = "is_long_term")
+    public Boolean isLongTerm() {
+        return longTerm;
+    }
+
+    public void setLongTerm(Boolean longTerm) {
+        this.longTerm = longTerm;
+    }
+
+    @Column(name = "seats")
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    @Column(name = "ride_time")
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }
