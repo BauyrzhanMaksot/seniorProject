@@ -43,10 +43,20 @@ public class OrderService {
     @Autowired
     private DriverOfferService driverOfferService;
 
-    HttpStatus putAcceptedOffer(Long orderId) {
+    HttpStatus finishOffer(Long offerId) {
+        orderRepository.finishOffer(offerId);
+        return HttpStatus.OK;
+    }
+
+    HttpStatus finishRequest(Long offerId) {
+        orderRepository.finishRequest(offerId);
+        return HttpStatus.OK;
+    }
+
+    HttpStatus putAcceptedOffer(Long offerId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
-        DriverOffer driverOffer = driverOfferRepository.findById(orderId).orElse(null);
+        DriverOffer driverOffer = driverOfferRepository.findById(offerId).orElse(null);
         if (driverOffer == null) return HttpStatus.NOT_FOUND;
         Order order = new Order();
         order.setDate(new Date());
@@ -55,15 +65,16 @@ public class OrderService {
         order.setClient(userPrincipal.getUser());
         order.setDriver(driverOffer.getDriver());
         order.setPrice(driverOffer.getPrice());
+        order.setStatus(1);
         orderRepository.save(order);
         driverOfferService.deleteOffer(driverOffer.getId());
         return HttpStatus.OK;
     }
 
-    HttpStatus putAcceptedRequest(Long orderId) {
+    HttpStatus putAcceptedRequest(Long requestId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
-        ClientRequest clientRequest = clientRequestRepository.findById(orderId).orElse(null);
+        ClientRequest clientRequest = clientRequestRepository.findById(requestId).orElse(null);
         if (clientRequest == null) return HttpStatus.NOT_FOUND;
         Order order = new Order();
         order.setDate(new Date());
@@ -72,6 +83,7 @@ public class OrderService {
         order.setClient(clientRequest.getClient());
         order.setDriver(userPrincipal.getUser());
         order.setPrice(clientRequest.getPrice());
+        order.setStatus(1);
         orderRepository.save(order);
         clientRequestService.deleteRequest(clientRequest.getId());
         return HttpStatus.OK;
@@ -81,13 +93,27 @@ public class OrderService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
         Long id = userPrincipal.getUser().getId();
-        return orderRepository.findByClientId(id);
+        return orderRepository.findHistoryByClientId(id);
     }
 
     List<Order> getHistoryDriver() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
         Long id = userPrincipal.getUser().getId();
-        return orderRepository.findByDriverId(id);
+        return orderRepository.findHistoryByDriverId(id);
+    }
+
+    List<Order> getAcceptedHistoryClient() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        Long id = userPrincipal.getUser().getId();
+        return orderRepository.findAcceptedHistoryByClientId(id);
+    }
+
+    List<Order> getAcceptedHistoryDriver() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        Long id = userPrincipal.getUser().getId();
+        return orderRepository.findAcceptedHistoryByDriverId(id);
     }
 }

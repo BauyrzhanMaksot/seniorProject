@@ -54,9 +54,11 @@ public class UserService {
     }
 
     public HttpStatus updateUser(User user) {
-        UserImage userImage = user.getUserImage();
-        userImage.setUser(user);
-        user.setUserImage(userImage);
+        if (user.getUserImage()!=null) {
+            UserImage userImage = user.getUserImage();
+            userImage.setUser(user);
+            user.setUserImage(userImage);
+        }
         userRepository.save(user);
         return HttpStatus.OK;
     }

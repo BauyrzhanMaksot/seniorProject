@@ -2,6 +2,7 @@ package com.example.demo.driver;
 
 import com.example.demo.user.User;
 import com.example.demo.user.UserPrincipal;
+import com.example.demo.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.util.List;
 @Service
 public class DriverService {
 
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private SessionRegistry sessionRegistry;
@@ -30,5 +33,9 @@ public class DriverService {
             }
         }
         return clients;
+    }
+
+    public User getDriver(Long id) {
+        return userRepository.findDriver(id);
     }
 }

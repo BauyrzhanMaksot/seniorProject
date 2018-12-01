@@ -23,6 +23,7 @@ public class Order {
     private User driver;
     private User client;
     private String price;
+    private Integer status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,5 +125,14 @@ public class Order {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    @Column(name = "status")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

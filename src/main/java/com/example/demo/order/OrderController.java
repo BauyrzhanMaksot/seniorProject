@@ -29,6 +29,18 @@ public class OrderController {
         return HttpStatus.OK;
     }
 
+    @GetMapping("finishOffer/{offerId}")
+    HttpStatus finishOffer(@PathVariable Long offerId) {
+        orderService.finishOffer(offerId);
+        return HttpStatus.OK;
+    }
+
+    @GetMapping("finishRequest/{requestId}")
+    HttpStatus finishRequest(@PathVariable Long requestId) {
+        orderService.finishRequest(requestId);
+        return HttpStatus.OK;
+    }
+
     @GetMapping("getHistoryClient")
     List<Order> getHistoryClient() {
         return orderService.getHistoryClient();
@@ -36,4 +48,13 @@ public class OrderController {
 
     @GetMapping("getHistoryDriver")
     List<Order> getHistoryDriver() { return orderService.getHistoryDriver(); }
+
+    @GetMapping("getAcceptedHistoryClient")
+    List<Order> getAcceptedHistoryClient() {
+        return orderService.getAcceptedHistoryClient();
+    }
+
+    @GetMapping("getAcceptedHistoryDriver")
+    List<Order> getAcceptedHistoryDriver() { return orderService.getAcceptedHistoryDriver(); }
+
 }

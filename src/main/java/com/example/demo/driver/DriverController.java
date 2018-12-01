@@ -3,6 +3,7 @@ package com.example.demo.driver;
 import com.example.demo.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,5 +20,10 @@ public class DriverController {
     @GetMapping("onlineClients")
     public List<User> getOnlineClients() {
         return driverService.listOnlineClient();
+    }
+
+    @GetMapping("getDriver/{id}")
+    public User getDriver(@PathVariable Long id) {
+        return driverService.getDriver(id);
     }
 }

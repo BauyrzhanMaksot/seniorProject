@@ -3,6 +3,7 @@ package com.example.demo.driver;
 import com.example.demo.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Bauka on 15-Oct-18
@@ -16,6 +17,7 @@ public class DriverOffer {
     private String pointB;
     private String price;
     private User driver;
+    private List<DriverLongTRDays> days;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,5 +65,14 @@ public class DriverOffer {
 
     public void setDriver(User driver) {
         this.driver = driver;
+    }
+
+    @OneToMany
+    public List<DriverLongTRDays> getDays() {
+        return days;
+    }
+
+    public void setDays(List<DriverLongTRDays> days) {
+        this.days = days;
     }
 }
