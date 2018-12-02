@@ -25,7 +25,7 @@ public class DriverLongTRDays {
         this.id = id;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JsonIgnore
     @JoinColumn(name = "driver_offers_id")
     public DriverOffer getDriverOffer() {

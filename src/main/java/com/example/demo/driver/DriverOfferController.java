@@ -3,11 +3,9 @@ package com.example.demo.driver;
 import com.example.demo.RequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -23,6 +21,16 @@ public class DriverOfferController {
     public HttpStatus putOffer(@RequestBody RequestDto requestDto) {
         driverOfferService.putOffer(requestDto);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/getOffer/{id}")
+    public DriverOffer getOffer(@PathVariable Long id) {
+     return driverOfferService.getOffer(id);
+    }
+
+    @PostMapping("/updateOffer")
+    public HttpStatus updateOffer(@RequestBody DriverOffer driverOffer) {
+        return driverOfferService.updateOffer(driverOffer);
     }
 
     @GetMapping("/getOffer")

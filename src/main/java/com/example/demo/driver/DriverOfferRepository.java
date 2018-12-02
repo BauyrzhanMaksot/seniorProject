@@ -10,6 +10,5 @@ import java.util.List;
  */
 @Repository
 public interface DriverOfferRepository extends JpaRepository<DriverOffer, Long> {
-
     List<DriverOffer> findByDriverId(Long id);
 }
