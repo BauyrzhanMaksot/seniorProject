@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.driver.DriverLongTRDays;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,7 +13,10 @@ public class RequestDto {
     private String pointA;
     private String pointB;
     private String price;
+    private Boolean longTerm;
     private List<DriverLongTRDays> days;
+    private Integer seats;
+    private Date time;
 
     public String getPointA() {
         return pointA;
@@ -44,5 +48,29 @@ public class RequestDto {
 
     public void setDays(List<DriverLongTRDays> days) {
         this.days = days;
+    }
+
+    public Boolean getLongTerm() {
+        return longTerm;
+    }
+
+    public void setLongTerm(Boolean longTerm) {
+        this.longTerm = longTerm;
+    }
+
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

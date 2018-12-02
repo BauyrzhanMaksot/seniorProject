@@ -47,6 +47,9 @@ public class DriverOfferService {
         driverOffer.setPointB(requestDto.getPointB());
         driverOffer.setPrice(requestDto.getPrice());
         driverOffer.setDriver(userPrincipal.getUser());
+        driverOffer.setLongTerm(requestDto.getLongTerm());
+        driverOffer.setSeats(requestDto.getSeats());
+        driverOffer.setTime(requestDto.getTime());
         //driverOffer.setDays(requestDto.getDays());
         driverOffer = driverOfferRepository.save(driverOffer);
         if (requestDto.getDays() != null) {
