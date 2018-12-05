@@ -26,9 +26,9 @@ public class UserController {
     }
 
     @GetMapping("/bake/{token}")
-    public HttpStatus confirm(@PathVariable String token) {
+    public String confirm(@PathVariable String token) {
         userConfirmationService.confirm(token);
-       return HttpStatus.OK;
+       return "<html><style>body {background-color:#ff4d4d; text-align:center} div {background-color: lightgrey;width: 300px;border: 10px solid black;padding: 25px;margin: 25px;} </style><body><div><h1>Your account has been enabled</h1><p>Now you can login</p></div></body></html>";
     }
 
     @GetMapping("/getUser")
